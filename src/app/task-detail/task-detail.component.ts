@@ -6,7 +6,6 @@ import {
   CdkDragMove,
 } from '@angular/cdk/drag-drop';
 import { TaskService } from '../task.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-task-detail',
@@ -122,7 +121,7 @@ export class TaskDetailComponent implements OnInit {
     task.status = status;
     this.taskService.changeTaskStatus(task._id, status).subscribe(
       () => {
-        // Zadanie zostało zaktualizowane
+        task.status = status;
       },
       (error) => {
         console.error('Failed to update task:', error);

@@ -55,6 +55,23 @@ app.get('/tasks', (req, res) => {
     });
 });
 
+// Aktualizacja zadania
+app.put('/tasks/:id', (req, res) => {
+  const taskId = req.params.id;
+  const { title, status } = req.body;
+
+  Task.findByIdAndUpdate(taskId, { title, status })
+    .then((task) => {
+      if (!task) {
+        return res.status(404).json({ error: 'Task not found' });
+      }
+      res.json(task);
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to update task' });
+    });
+});
+
 // Nasłuchiwanie na określonym porcie
 const port = 3000;
 app.listen(port, () => {
