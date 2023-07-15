@@ -1,6 +1,11 @@
 <div class="task-detail">
   <h1>Task Detail</h1>
+  <div class="add-task">
+    <input type="text" [(ngModel)]="newTaskTitle" placeholder="Enter task title">
+    <button (click)="addTask()">Add Task</button>
+  </div>
 
+  <button (click)="goBack()">Back</button>
   <div class="task-list">
     <h2>TODO</h2>
     <ul>
@@ -34,10 +39,5 @@
     </ul>
   </div>
 
-  <div class="add-task">
-    <input type="text" [(ngModel)]="newTaskTitle" placeholder="Enter task title">
-    <button (click)="addTask()">Add Task</button>
-  </div>
-
-  <button (click)="goBack()">Back</button>
+ 
 </div>
