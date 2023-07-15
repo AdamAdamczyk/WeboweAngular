@@ -16,7 +16,7 @@
           <button class="moveTo" (click)="changeTaskStatus(task, 'DOING')">Move to DOING</button>
           <button class="moveTo" (click)="changeTaskStatus(task, 'DONE')">Move to DONE</button>
           <button class="delete" (click)="deleteTask(task._id)">Delete</button>
-          <button class="update" (click)="updateTask(task)">Update</button>
+          <button class="update" (click)="openUpdateDialog(task)">Update</button>
         </div>
       </li>
     </ul>
@@ -31,7 +31,7 @@
           <button class="moveTo" (click)=" changeTaskStatus(task, 'TODO')">Move to TODO</button>
           <button class="moveTo" (click)="changeTaskStatus(task, 'DONE')">Move to DONE</button>
           <button class="delete" (click)="deleteTask(task._id)">Delete</button>
-          <button class="update" (click)="updateTask(task)">Update</button>
+          <button class="update" (click)="openUpdateDialog(task)">Update</button>
         </div>
       </li>
     </ul>
@@ -46,7 +46,7 @@
           <button class="moveTo" (click)="changeTaskStatus(task, 'TODO')">Move to TODO</button>
           <button class="moveTo" (click)="changeTaskStatus(task, 'DOING')">Move to DOING</button>
           <button class="delete" (click)="deleteTask(task._id)">Delete</button>
-          <button class="update" (click)="updateTask(task)">Update</button>
+          <button class="update" (click)="openUpdateDialog(task)">Update</button>
         </div>
       </li>
     </ul>
