@@ -7,7 +7,8 @@ import { RouterModule } from '@angular/router';
 import { FilterTasksPipe } from './pipes/filter-tasks.pipe';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; // Dodaj import HttpClientModule
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Dodaj import HttpClientModule
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http'; // Dodaj import HttpCli
     DragDropModule,
     RouterModule,
     FormsModule,
-    HttpClientModule // Dodaj HttpClientModule do listy importów
+    HttpClientModule,
+    BrowserAnimationsModule // Dodaj HttpClientModule do listy importów
   ],
   providers: [],
   bootstrap: [AppComponent]
