@@ -1,0 +1,38 @@
+.functionality-detail {
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  
+    .functionality-info {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+  
+      .info-title {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+  
+      .info-value {
+        font-weight: normal;
+      }
+    }
+  
+    .back-button {
+      padding: 10px 20px;
+      background-color: #f44336;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  
+    .back-button:hover {
+      background-color: #d32f2f;
+    }
+  
+    /* Dodaj tutaj style dla innych elementów w komponencie */
+  }
+  
