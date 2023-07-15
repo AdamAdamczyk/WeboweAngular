@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CdkDragDrop, CdkDragMove, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  CdkDragMove,
+} from '@angular/cdk/drag-drop';
 import { TaskService } from '../task.service';
 
 @Component({
@@ -41,20 +45,21 @@ export class TaskDetailComponent implements OnInit {
   onDragEnded(event: CdkDragDrop<any[]>, status: string) {
     if (event.previousContainer === event.container) {
       // Przenoszenie w obrębie tej samej listy
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.updateTasksOrder(event.container.data);
-    } else {
-      // Przenoszenie między listami
-      const taskToMove = event.previousContainer.data[event.previousIndex];
-      taskToMove.status = status;
-      transferArrayItem(
-        event.previousContainer.data,
+      moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-      this.updateTasksOrder([taskToMove, ...event.container.data]);
+    } else {
+      // Przenoszenie między listami
+      const taskToMove = event.previousContainer.data[event.previousIndex];
+      taskToMove.status = status;
+      moveItemInArray(event.previousContainer.data, event.previousIndex, 0); // Usuń z poprzedniej listy
+      event.container.data.splice(event.currentIndex, 0, taskToMove); // Dodaj do nowej listy na odpowiedni indeks
     }
+
+    // Aktualizacja zadań w bazie danych
+    this.updateTasksOrder();
   }
 
   onDragMoved(event: CdkDragMove, task: any) {
@@ -65,30 +70,11 @@ export class TaskDetailComponent implements OnInit {
     console.log('Przenoszone dane:', draggedData, task);
   }
 
-  updateTasksOrder(updatedTasks: any[]) {
-    updatedTasks.forEach((task, index) => {
+  updateTasksOrder() {
+    this.tasks.forEach((task, index) => {
       task.order = index;
       this.updateTask(task);
     });
-  }
-
-  updateTask(task: any) {
-    this.taskService.updateTask(task).subscribe(
-      () => {
-        // Zadanie zostało zaktualizowane
-      },
-      (error) => {
-        console.error('Failed to update task:', error);
-      }
-    );
-  }
-
-  goBack(): void {
-    this.router.navigate(['/']);
-  }
-
-  filterTasks(tasks: any[], status: string): any[] {
-    return tasks.filter((task) => task.status === status);
   }
 
   addTask() {
@@ -109,6 +95,36 @@ export class TaskDetailComponent implements OnInit {
         }
       );
     }
+  }
+
+  updateTask(task: any) {
+    this.taskService.updateTask(task).subscribe(
+      () => {
+        // Zadanie zostało zaktualizowane
+      },
+      (error) => {
+        console.error('Failed to update task:', error);
+      }
+    );
+  }
+
+  deleteTask(taskId: string) {
+    this.taskService.deleteTask(taskId).subscribe(
+      () => {
+        this.getTasks(); // Pobierz zadania ponownie, aby zaktualizować listę
+      },
+      (error) => {
+        console.error('Failed to delete task:', error);
+      }
+    );
+  }
+
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
+
+  filterTasks(tasks: any[], status: string): any[] {
+    return tasks.filter((task) => task.status === status);
   }
 
   changeTaskStatus(task: any, status: string) {

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:3000/tasks'; // Przykładowy URL API
+  private apiUrl = 'http://localhost:3000/tasks';
 
   constructor(private http: HttpClient) {}
 
@@ -24,9 +24,13 @@ export class TaskService {
   }
 
   changeTaskStatus(taskId: string, status: string): Observable<any> {
-    const url = `http://localhost:3000/tasks/${taskId}`;
+    const url = `${this.apiUrl}/${taskId}`;
     const body = { status };
-  
     return this.http.put(url, body);
+  }
+
+  deleteTask(taskId: string): Observable<any> {
+    const url = `${this.apiUrl}/${taskId}`;
+    return this.http.delete(url);
   }
 }

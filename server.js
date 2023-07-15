@@ -72,6 +72,22 @@ app.put('/tasks/:id', (req, res) => {
     });
 });
 
+// Usunięcie zadania
+app.delete('/tasks/:id', (req, res) => {
+  const taskId = req.params.id;
+
+  Task.findByIdAndRemove(taskId)
+    .then((task) => {
+      if (!task) {
+        return res.status(404).json({ error: 'Task not found' });
+      }
+      res.json({ message: 'Task deleted successfully' });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to delete task' });
+    });
+});
+
 // Nasłuchiwanie na określonym porcie
 const port = 3000;
 app.listen(port, () => {

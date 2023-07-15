@@ -31,7 +31,22 @@
 
         &:hover {
           background-color: #e0e0e0;
+          
         }
+
+        button.delete {
+          background-color: #f44336;
+        }
+
+        button.update {
+          background-color: #4caf50;
+          margin: 5px;
+        }
+        button.moveTo {
+          background-color: #231aa1;
+          margin: 5px;
+        }
+        
       }
     }
   }
@@ -50,7 +65,7 @@
       padding: 5px 10px;
       background-color: #4caf50;
       color: white;
-      border: none;
+      border: 5 px;
       border-radius: 4px;
       cursor: pointer;
     }
@@ -58,9 +73,9 @@
 
   button {
     padding: 5px 10px;
-    background-color: #f44336;
+    background-color: #5daf71;
     color: white;
-    border: none;
+    border: 5 px;
     border-radius: 4px;
     cursor: pointer;
   }
