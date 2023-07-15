@@ -13,8 +13,8 @@
       <li *ngFor="let task of filterTasks(tasks, 'TODO'); let i = index" cdkDrag>
         <div class="task-item">
           {{ task.title }}
-          <button class="moveTo" (click)="updateTask(task._id); changeTaskStatus(task, 'DOING')">Move to DOING</button>
-          <button class="moveTo" (click)="updateTask(task._id); changeTaskStatus(task, 'DONE')">Move to DONE</button>
+          <button class="moveTo" (click)="changeTaskStatus(task, 'DOING')">Move to DOING</button>
+          <button class="moveTo" (click)="changeTaskStatus(task, 'DONE')">Move to DONE</button>
           <button class="delete" (click)="deleteTask(task._id)">Delete</button>
           <button class="update" (click)="updateTask(task)">Update</button>
         </div>
@@ -28,8 +28,8 @@
       <li *ngFor="let task of filterTasks(tasks, 'DOING'); let i = index" cdkDrag>
         <div class="task-item">
           {{ task.title }}
-          <button class="moveTo" (click)="updateTask(task._id); changeTaskStatus(task, 'TODO')">Move to TODO</button>
-          <button class="moveTo" (click)="updateTask(task._id); changeTaskStatus(task, 'DONE')">Move to DONE</button>
+          <button class="moveTo" (click)=" changeTaskStatus(task, 'TODO')">Move to TODO</button>
+          <button class="moveTo" (click)="changeTaskStatus(task, 'DONE')">Move to DONE</button>
           <button class="delete" (click)="deleteTask(task._id)">Delete</button>
           <button class="update" (click)="updateTask(task)">Update</button>
         </div>
@@ -43,8 +43,8 @@
       <li *ngFor="let task of filterTasks(tasks, 'DONE'); let i = index" cdkDrag>
         <div class="task-item">
           {{ task.title }}
-          <button class="moveTo" (click)="updateTask(task._id); changeTaskStatus(task, 'TODO')">Move to TODO</button>
-          <button class="moveTo" (click)="updateTask(task._id); changeTaskStatus(task, 'DOING')">Move to DOING</button>
+          <button class="moveTo" (click)="changeTaskStatus(task, 'TODO')">Move to TODO</button>
+          <button class="moveTo" (click)="changeTaskStatus(task, 'DOING')">Move to DOING</button>
           <button class="delete" (click)="deleteTask(task._id)">Delete</button>
           <button class="update" (click)="updateTask(task)">Update</button>
         </div>
