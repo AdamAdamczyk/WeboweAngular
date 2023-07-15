@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CdkDragDrop, moveItemInArray, CdkDragMove } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  CdkDragMove,
+} from '@angular/cdk/drag-drop';
 import { TaskService } from '../task.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-task-detail',
@@ -12,6 +17,7 @@ export class TaskDetailComponent implements OnInit {
   taskId: string;
   tasks: any[]; // Tablica zadań
   newTaskTitle: string;
+  http: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,21 +44,39 @@ export class TaskDetailComponent implements OnInit {
     );
   }
 
-  onDragEnded(event: CdkDragDrop<any>, status: string) {
-    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
-    this.tasks.forEach((task, index) => {
-      task.status = status;
-      task.order = index; // Dodatkowe pole order, aby śledzić kolejność zadań
-      this.updateTask(task);
-    });
+  onDragEnded(event: CdkDragDrop<any[]>, status: string) {
+    if (event.previousContainer === event.container) {
+      // Przenoszenie w obrębie tej samej listy
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      // Przenoszenie między listami
+      const taskToMove = event.previousContainer.data[event.previousIndex];
+      taskToMove.status = status;
+      moveItemInArray(event.previousContainer.data, event.previousIndex, 0); // Usuń z poprzedniej listy
+      event.container.data.splice(event.currentIndex, 0, taskToMove); // Dodaj do nowej listy na odpowiedni indeks
+    }
+
+    // Aktualizacja zadań w bazie danych
+    this.updateTasksOrder();
   }
 
   onDragMoved(event: CdkDragMove, task: any) {
     // Pobierz dane elementu przenoszonego z atrybutu `data`
-    const draggedData = event.source.getFreeDragPosition();
+    const draggedData = event.pointerPosition;
 
     // Wykorzystaj dane elementu przenoszonego w dowolny sposób
     console.log('Przenoszone dane:', draggedData, task);
+  }
+
+  updateTasksOrder() {
+    this.tasks.forEach((task, index) => {
+      task.order = index;
+      this.updateTask(task);
+    });
   }
 
   addTask() {
@@ -60,7 +84,7 @@ export class TaskDetailComponent implements OnInit {
       const newTask = {
         title: this.newTaskTitle,
         status: 'TODO',
-        order: this.tasks.length, // Ustalamy kolejność nowego zadania
+        order: this.tasks.length,
       };
 
       this.taskService.addTask(newTask).subscribe(
@@ -92,5 +116,17 @@ export class TaskDetailComponent implements OnInit {
 
   filterTasks(tasks: any[], status: string): any[] {
     return tasks.filter((task) => task.status === status);
+  }
+
+  changeTaskStatus(task: any, status: string) {
+    task.status = status;
+    this.taskService.changeTaskStatus(task._id, status).subscribe(
+      () => {
+        // Zadanie zostało zaktualizowane
+      },
+      (error) => {
+        console.error('Failed to update task:', error);
+      }
+    );
   }
 }

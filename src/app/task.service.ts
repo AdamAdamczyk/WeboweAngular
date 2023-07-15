@@ -22,4 +22,11 @@ export class TaskService {
     const url = `${this.apiUrl}/${task.id}`;
     return this.http.put<any>(url, task);
   }
+
+  changeTaskStatus(taskId: string, status: string): Observable<any> {
+    const url = `http://localhost:3000/tasks/${taskId}`;
+    const body = { status };
+  
+    return this.http.put(url, body);
+  }
 }
