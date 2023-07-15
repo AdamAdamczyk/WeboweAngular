@@ -6,6 +6,9 @@ import {
   CdkDragMove,
 } from '@angular/cdk/drag-drop';
 import { TaskService } from '../task.service';
+import { TaskUpdateDialogComponent } from '../task-update-dialog/task-update-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-task-detail',
@@ -20,7 +23,8 @@ export class TaskDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private dialog: MatDialog
   ) {
     this.taskId = this.route.snapshot.paramMap.get('id') ?? '';
     this.tasks = [];
@@ -137,5 +141,18 @@ export class TaskDetailComponent implements OnInit {
         console.error('Failed to update task:', error);
       }
     );
+  }
+
+  openUpdateDialog(task: any): void {
+    const dialogRef = this.dialog.open(TaskUpdateDialogComponent, {
+      data: { taskTitle: task.title },
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        task.title = result;
+        this.updateTask(task);
+      }
+    });
   }
 }
