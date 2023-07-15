@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CdkDragDrop, moveItemInArray, CdkDragMove } from '@angular/cdk/drag-drop';
 import { TaskService } from '../task.service';
-import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-detail',
@@ -38,21 +38,22 @@ export class TaskDetailComponent implements OnInit {
     );
   }
 
-  onDragEnded(event: CdkDragDrop<any, any, any>, status: string) {
-    const startIndex = event.previousIndex;
-    const endIndex = event.currentIndex;
-  
-    if (startIndex === endIndex) {
-      return; // Nie ma potrzeby aktualizowania, jeśli zadanie nie zostało przemieszczone
-    }
-  
-    const draggedTask = this.tasks[startIndex];
-    moveItemInArray(this.tasks, startIndex, endIndex);
-  
-    draggedTask.status = status;
-    this.updateTask(draggedTask);
+  onDragEnded(event: CdkDragDrop<any>, status: string) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    this.tasks.forEach((task, index) => {
+      task.status = status;
+      task.order = index; // Dodatkowe pole order, aby śledzić kolejność zadań
+      this.updateTask(task);
+    });
   }
-  
+
+  onDragMoved(event: CdkDragMove, task: any) {
+    // Pobierz dane elementu przenoszonego z atrybutu `data`
+    const draggedData = event.source.getFreeDragPosition();
+
+    // Wykorzystaj dane elementu przenoszonego w dowolny sposób
+    console.log('Przenoszone dane:', draggedData, task);
+  }
 
   addTask() {
     if (this.newTaskTitle.trim() !== '') {
@@ -92,6 +93,4 @@ export class TaskDetailComponent implements OnInit {
   filterTasks(tasks: any[], status: string): any[] {
     return tasks.filter((task) => task.status === status);
   }
-
-  
 }
