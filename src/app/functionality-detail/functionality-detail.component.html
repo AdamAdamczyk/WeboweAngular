@@ -1,21 +1,17 @@
 <div class="functionality-detail">
-  <h1 class="title">Functionality Detail</h1>
+  <h1 class="title">Functionality</h1>
   <div class="functionality-info">
-    <h2 class="info-title">Functionality ID:</h2>
-    <p class="info-value">{{ functionalityId }}</p>
   </div>
   <button class="back-button" (click)="goBack()">Go Back</button>
   <div class="add-functionality">
-    <textarea [(ngModel)]="newFunctionalityTitle" placeholder="Enter functionality title"></textarea>
+    <textarea [(ngModel)]="newFunctionalityTitle" placeholder="Enter task title"></textarea>
     <button (click)="addFunctionality()">Add Functionality</button>
   </div>
-  <div class="functionality-list">
-    <h2 class="list-title">Functionalities:</h2>
-    <ul>
-      <li *ngFor="let functionality of functionalities">
-        {{ functionality.title }}
-      </li>
-      
-    </ul>
-  </div>
+  <ul class="functionality-list">
+    <li *ngFor="let functionality of functionalities">
+      <div>{{ functionality.title }}</div>
+      <button (click)="openUpdateDialog(functionality)">Update</button>
+      <button (click)="deleteFunctionality(functionality)">Delete</button>
+    </li>
+  </ul>
 </div>
