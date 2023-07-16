@@ -8,7 +8,7 @@ import { FunctionalityUpdateDialogComponent } from '../functionality-update-dial
 @Component({
   selector: 'app-functionality-detail',
   templateUrl: './functionality-detail.component.html',
-  styleUrls: ['./functionality-detail.component.scss']
+  styleUrls: ['./functionality-detail.component.scss'],
 })
 export class FunctionalityDetailComponent implements OnInit {
   functionalityId: string | null = null;
@@ -56,35 +56,37 @@ export class FunctionalityDetailComponent implements OnInit {
   updateFunctionality(functionality: any): void {
     const updatedFunctionality = {
       id: functionality._id,
-      title: functionality.title
+      title: functionality.title,
     };
 
-    this.functionalityService.updateFunctionality(updatedFunctionality).subscribe(
-      (result) => {
-        console.log('Functionality updated:', result);
-        this.getFunctionality(); // Odśwież listę funkcjonalności po aktualizacji
-      },
-      (error) => {
-        console.error('Failed to update functionality:', error);
-      }
-    );
+    this.functionalityService
+      .updateFunctionality(updatedFunctionality)
+      .subscribe(
+        (result) => {
+          console.log('Functionality updated:', result);
+          this.getFunctionality(); // Odśwież listę funkcjonalności po aktualizacji
+        },
+        (error) => {
+          console.error('Failed to update functionality:', error);
+        }
+      );
   }
 
-
-  
   deleteFunctionality(functionality: any): void {
     const deleteFunctionality = {
-      id: functionality._id
+      id: functionality._id,
     };
 
-    this.functionalityService.deleteFunctionality(deleteFunctionality).subscribe(
-      (result) => {
-        this.getFunctionality(); // Odśwież listę funkcjonalności po aktualizacji
-      },
-      (error) => {
-        console.error('Failed to update functionality:', error);
-      }
-    );
+    this.functionalityService
+      .deleteFunctionality(deleteFunctionality)
+      .subscribe(
+        (result) => {
+          this.getFunctionality(); // Odśwież listę funkcjonalności po aktualizacji
+        },
+        (error) => {
+          console.error('Failed to update functionality:', error);
+        }
+      );
   }
 
   getFunctionality(): void {
@@ -102,7 +104,7 @@ export class FunctionalityDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(FunctionalityUpdateDialogComponent, {
       data: { functionalityTitle: functionality.title },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         functionality.title = result;
@@ -110,5 +112,10 @@ export class FunctionalityDetailComponent implements OnInit {
       }
     });
   }
-  
+
+  goToTasks(functionality: any): void {
+    if (functionality && functionality._id) {
+      this.router.navigate(['/task', functionality._id]);
+    }
+  }
 }
