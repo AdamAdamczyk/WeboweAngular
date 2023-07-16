@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FunctionalityService } from '../functionality.service';
+import { TaskUpdateDialogComponent } from '../task-update-dialog/task-update-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { FunctionalityUpdateDialogComponent } from '../functionality-update-dialog/functionality-update-dialog.component';
 
 @Component({
   selector: 'app-functionality-detail',
@@ -9,20 +12,23 @@ import { FunctionalityService } from '../functionality.service';
 })
 export class FunctionalityDetailComponent implements OnInit {
   functionalityId: string | null = null;
-  functionalities: any[] = [];
+  functionality: any;
   newFunctionalityTitle: string;
+  functionalities: any[];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private functionalityService: FunctionalityService
-  ) { 
-    this.functionalityId = this.route.snapshot.paramMap.get('id');
+    private functionalityService: FunctionalityService,
+    private dialog: MatDialog
+  ) {
     this.newFunctionalityTitle = '';
+    this.functionalities = [];
   }
 
   ngOnInit(): void {
-    this.getFunctionalities();
+    this.functionalityId = this.route.snapshot.paramMap.get('id');
+    this.getFunctionality();
   }
 
   goBack(): void {
@@ -32,17 +38,13 @@ export class FunctionalityDetailComponent implements OnInit {
   addFunctionality(): void {
     if (this.newFunctionalityTitle.trim() !== '') {
       const newFunctionality = {
-        title: this.newFunctionalityTitle
+        title: this.newFunctionalityTitle,
       };
 
       this.functionalityService.addFunctionality(newFunctionality).subscribe(
         (functionality) => {
-          // Pomyślnie dodano funkcjonalność
-          console.log('Functionality added:', functionality);
-          // Zresetuj pole tekstowe
           this.newFunctionalityTitle = '';
-          // Dodaj nową funkcjonalność do listy
-          this.functionalities.push(functionality);
+          this.getFunctionality(); // Odśwież listę funkcjonalności po dodaniu
         },
         (error) => {
           console.error('Failed to add functionality:', error);
@@ -51,8 +53,42 @@ export class FunctionalityDetailComponent implements OnInit {
     }
   }
 
-  getFunctionalities(): void {
-    this.functionalityService.getFunctionalities().subscribe(
+  updateFunctionality(functionality: any): void {
+    const updatedFunctionality = {
+      id: functionality._id,
+      title: functionality.title
+    };
+
+    this.functionalityService.updateFunctionality(updatedFunctionality).subscribe(
+      (result) => {
+        console.log('Functionality updated:', result);
+        this.getFunctionality(); // Odśwież listę funkcjonalności po aktualizacji
+      },
+      (error) => {
+        console.error('Failed to update functionality:', error);
+      }
+    );
+  }
+
+
+  
+  deleteFunctionality(functionality: any): void {
+    const deleteFunctionality = {
+      id: functionality._id
+    };
+
+    this.functionalityService.deleteFunctionality(deleteFunctionality).subscribe(
+      (result) => {
+        this.getFunctionality(); // Odśwież listę funkcjonalności po aktualizacji
+      },
+      (error) => {
+        console.error('Failed to update functionality:', error);
+      }
+    );
+  }
+
+  getFunctionality(): void {
+    this.functionalityService.getFunctionality().subscribe(
       (functionalities) => {
         this.functionalities = functionalities;
       },
@@ -62,5 +98,17 @@ export class FunctionalityDetailComponent implements OnInit {
     );
   }
 
-
+  openUpdateDialog(functionality: any): void {
+    const dialogRef = this.dialog.open(FunctionalityUpdateDialogComponent, {
+      data: { functionalityTitle: functionality.title },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        functionality.title = result;
+        this.updateFunctionality(functionality);
+      }
+    });
+  }
+  
 }

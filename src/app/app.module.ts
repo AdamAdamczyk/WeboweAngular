@@ -14,6 +14,7 @@ import { TaskUpdateDialogComponent } from './task-update-dialog/task-update-dial
 import { FilterFunctionalityPipe } from './pipes/filter-functionality.pipe';
 import { CommonModule } from '@angular/common';
 import { FunctionalityDetailComponent } from './functionality-detail/functionality-detail.component';
+import { FunctionalityUpdateDialogComponent } from './functionality-update-dialog/functionality-update-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FunctionalityDetailComponent } from './functionality-detail/functionali
     FilterFunctionalityPipe,
     TaskDetailComponent,
     TaskUpdateDialogComponent,
-    FunctionalityDetailComponent
+    FunctionalityDetailComponent,
+    FunctionalityUpdateDialogComponent
   ],
   imports: [
     BrowserModule,
