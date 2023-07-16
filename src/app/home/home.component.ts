@@ -13,8 +13,8 @@ export class HomeComponent implements OnInit {
     // Inicjalizacja komponentu
   }
 
-  goToFunctionalityDetail(id: string): void {
-    this.router.navigate(['/functionality', id]);
+  goToFunctionalityDetail(): void {
+    this.router.navigate(['/functionality']);
   }
 
   goToTaskDetail(id: string): void {

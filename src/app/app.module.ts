@@ -11,13 +11,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Dodaj import HttpClientModule
 import { MatDialogModule } from '@angular/material/dialog';
 import { TaskUpdateDialogComponent } from './task-update-dialog/task-update-dialog.component';
+import { FilterFunctionalityPipe } from './pipes/filter-functionality.pipe';
+import { CommonModule } from '@angular/common';
+import { FunctionalityDetailComponent } from './functionality-detail/functionality-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FilterTasksPipe,
+    FilterFunctionalityPipe,
     TaskDetailComponent,
     TaskUpdateDialogComponent,
+    FunctionalityDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +32,7 @@ import { TaskUpdateDialogComponent } from './task-update-dialog/task-update-dial
     FormsModule,
     HttpClientModule,
     MatDialogModule,
+    CommonModule,
     BrowserAnimationsModule // Dodaj HttpClientModule do listy importów
   ],
   providers: [],

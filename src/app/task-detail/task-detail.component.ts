@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  CdkDragMove,
-} from '@angular/cdk/drag-drop';
 import { TaskService } from '../task.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskUpdateDialogComponent } from '../task-update-dialog/task-update-dialog.component';
@@ -44,34 +39,6 @@ export class TaskDetailComponent implements OnInit {
         console.error('Failed to retrieve tasks:', error);
       }
     );
-  }
-
-  onDragEnded(event: CdkDragDrop<any[]>, status: string) {
-    if (event.previousContainer === event.container) {
-      // Przenoszenie w obrębie tej samej listy
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      // Przenoszenie między listami
-      const taskToMove = event.previousContainer.data[event.previousIndex];
-      taskToMove.status = status;
-      moveItemInArray(event.previousContainer.data, event.previousIndex, 0); // Usuń z poprzedniej listy
-      event.container.data.splice(event.currentIndex, 0, taskToMove); // Dodaj do nowej listy na odpowiedni indeks
-    }
-
-    // Aktualizacja zadań w bazie danych
-    this.updateTasksOrder();
-  }
-
-  onDragMoved(event: CdkDragMove, task: any) {
-    // Pobierz dane elementu przenoszonego z atrybutu `data`
-    const draggedData = event.pointerPosition;
-
-    // Wykorzystaj dane elementu przenoszonego w dowolny sposób
-    console.log('Przenoszone dane:', draggedData, task);
   }
 
   updateTasksOrder() {
