@@ -9,7 +9,7 @@
   </div>
   <ul class="functionality-list">
     <li *ngFor="let functionality of functionalities">
-      <div>{{ functionality.title }}</div>
+      <div> Funkcjonalność: {{ functionality.title }}</div>
       <button (click)="openUpdateDialog(functionality)">Update</button>
       <button (click)="deleteFunctionality(functionality)">Delete</button>
       <button mat-button (click)="goToTasks(functionality)">Go to Tasks</button>

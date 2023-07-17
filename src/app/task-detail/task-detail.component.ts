@@ -4,13 +4,14 @@ import { TaskService } from '../task.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskUpdateDialogComponent } from '../task-update-dialog/task-update-dialog.component';
 
+
 @Component({
   selector: 'app-task-detail',
   templateUrl: './task-detail.component.html',
   styleUrls: ['./task-detail.component.scss'],
 })
 export class TaskDetailComponent implements OnInit {
-  taskId: string;
+  functionalityId: string;
   tasks: any[]; // Tablica zadań
   newTaskTitle: string;
 
@@ -21,7 +22,8 @@ export class TaskDetailComponent implements OnInit {
     private dialog: MatDialog
 
   ) {
-    this.taskId = this.route.snapshot.paramMap.get('id') ?? '';
+    this.functionalityId = this.route.snapshot.paramMap.get('id') ?? '';
+    //this.functionalityId = this.route.snapshot.paramMap.get('id');
     this.tasks = [];
     this.newTaskTitle = '';
   }
@@ -54,6 +56,7 @@ export class TaskDetailComponent implements OnInit {
         title: this.newTaskTitle,
         status: 'TODO',
         order: this.tasks.length,
+        functionalityId: this.functionalityId
       };
 
       this.taskService.addTask(newTask).subscribe(

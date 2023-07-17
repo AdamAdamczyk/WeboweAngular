@@ -64,7 +64,7 @@ mongoose
 const TaskSchema = new mongoose.Schema({
   title: String,
   status: String,
-  functionalityId: mongoose.Types.ObjectId,
+  functionalityId: String,
 });
 
 const Functionality = mongoose.model("Functionality", FunctionalitySchema);
@@ -75,11 +75,12 @@ const User = mongoose.model("User", UserSchema);
 
 // Dodanie nowego zadania
 app.post('/tasks', (req, res) => {
-  const { title, status } = req.body;
+  const { title, status, functionalityId } = req.body;
 
   const newTask = new Task({
     title,
     status,
+    functionalityId
   });
 
   newTask.save()
@@ -93,7 +94,7 @@ app.post('/tasks', (req, res) => {
 
 // Pobranie wszystkich zadań
 app.get('/tasks', (req, res) => {
-  Task.find()
+  Task.find()//wyszukanie wszystkich tasków z ID funkcjonalności
     .then((tasks) => {
       res.json(tasks);
     })
