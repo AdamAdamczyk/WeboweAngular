@@ -4,14 +4,18 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-functionality-update-dialog',
   template: `
-    <h2 mat-dialog-title>Update Functionality</h2>
-    <mat-dialog-content>
-      <input [(ngModel)]="updatedFunctionalityTitle" placeholder="Enter updated functionality title" />
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button (click)="onCancelClick()">Cancel</button>
-      <button mat-button (click)="onUpdateClick()">Update</button>
-    </mat-dialog-actions>
+<h2 mat-dialog-title style="margin-bottom: 16px;">Edytuj funkcjonalność</h2>
+<mat-dialog-content style="margin-bottom: 20px;">
+  <textarea  [(ngModel)]="updatedFunctionalityTitle" placeholder="Enter updated functionality title"  style="width: 100%; font-size: 1.2rem; padding: 8px; border: 1px solid #ccc; border-radius: 4px; resize: vertical; min-height: 100px;"></textarea>
+</mat-dialog-content>
+<mat-dialog-actions style="display: flex; justify-content: flex-end;">
+<button mat-button (click)="onCancelClick()" style="font-size: 1.2rem; padding: 8px 20px; margin-left: 10px; border: none; border-radius: 4px; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.2s ease; background-color: #007bff; color: #fff;">
+    Anuluj
+  </button>
+  <button mat-button (click)="onUpdateClick()" style="font-size: 1.2rem; padding: 8px 20px; margin-left: 10px; border: none; border-radius: 4px; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.2s ease; background-color: #f44336; color: #fff;">
+    Zatwierdź
+  </button>
+</mat-dialog-actions>
   `,
 })
 export class FunctionalityUpdateDialogComponent {

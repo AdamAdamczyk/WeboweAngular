@@ -4,26 +4,22 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { ObjectId } = mongoose.Types;
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
 const email = "adam@adamczyk.com";
-const password = "zaq1@WSX";
+const password = "adam";
 const secret = "your_secret_key";
-
 
 function createUserInDb() {
   console.log("Connected to MongoDB");
 
-  bcrypt.hash(password, 10);
-
   User.findOne({ email }).then((user) => {
     if (!user) {
       bcrypt
-        .hash(password, 10) // 10 is the saltRounds, increase it for more security but it will be slower
+        .hash(password, 10)
         .then((hashedPassword) => {
           User.create({ email, password: hashedPassword })
             .then(() => console.log("User created"))
@@ -36,8 +32,27 @@ function createUserInDb() {
   });
 }
 
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res
+        .status(401)
+        .json({ token: null, message: "Invalid email or password" });
+    }
+    const token = jwt.sign({ _id: user._id }, secret);
+    res.json({ token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
-// Połączenie z bazą danych MongoDB
 mongoose
   .connect("mongodb://localhost:27017/mydatabase", {
     useNewUrlParser: true,
@@ -51,35 +66,32 @@ mongoose
     console.error("Failed to connect to MongoDB:", error);
   });
 
-  const UserSchema = new mongoose.Schema({
-    email: String,
-    password: String,
-  });
-  
-  const FunctionalitySchema = new mongoose.Schema({
-    title: String,
-  });
+const UserSchema = new mongoose.Schema({
+  email: String,
+  password: String,
+});
 
-// Definicja modelu Task
+const FunctionalitySchema = new mongoose.Schema({
+  title: String,
+});
+
 const TaskSchema = new mongoose.Schema({
   title: String,
   status: String,
-  functionalityId: mongoose.Types.ObjectId,
+  functionalityId: String,
 });
 
 const Functionality = mongoose.model("Functionality", FunctionalitySchema);
 const Task = mongoose.model("Task", TaskSchema);
 const User = mongoose.model("User", UserSchema);
 
-
-
-// Dodanie nowego zadania
 app.post('/tasks', (req, res) => {
-  const { title, status } = req.body;
+  const { title, status, functionalityId } = req.body;
 
   const newTask = new Task({
     title,
     status,
+    functionalityId
   });
 
   newTask.save()
@@ -91,9 +103,10 @@ app.post('/tasks', (req, res) => {
     });
 });
 
-// Pobranie wszystkich zadań
-app.get('/tasks', (req, res) => {
-  Task.find()
+app.get('/tasks/:functionalityId', (req, res) => {
+  const functionalityId = req.params.functionalityId;
+
+  Task.find({ functionalityId: functionalityId }) 
     .then((tasks) => {
       res.json(tasks);
     })
@@ -102,7 +115,6 @@ app.get('/tasks', (req, res) => {
     });
 });
 
-// Aktualizacja zadania
 app.put('/tasks/:id', (req, res) => {
   const taskId = req.params.id;
   const { title, status } = req.body;
@@ -119,7 +131,6 @@ app.put('/tasks/:id', (req, res) => {
     });
 });
 
-// Usunięcie zadania
 app.delete('/tasks/:id', (req, res) => {
   const taskId = req.params.id;
 
@@ -135,13 +146,10 @@ app.delete('/tasks/:id', (req, res) => {
     });
 });
 
-// Nasłuchiwanie na określonym porcie
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-//////////////////////////////////////////////////////////////////
 
 app.post('/functionality', (req, res) => {
   const { title } = req.body;
@@ -159,7 +167,6 @@ app.post('/functionality', (req, res) => {
       res.status(500).json({ error: 'Failed to create functionality' });
     });
 });
-
 
 app.get('/functionality', (req, res) => {
   Functionality.find()

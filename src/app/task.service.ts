@@ -9,9 +9,10 @@ export class TaskService {
   private apiUrl = 'http://localhost:3000/tasks';
 
   constructor(private http: HttpClient) {}
-
-  getTasks(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  
+  getTasks(taskId: string): Observable<any[]> {
+    const url = `${this.apiUrl}/${taskId}`;
+    return this.http.get<any[]>(url);
   }
 
   addTask(task: any): Observable<any> {

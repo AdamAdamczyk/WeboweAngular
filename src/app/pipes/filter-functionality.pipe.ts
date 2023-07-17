@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterFunctionalityPipe implements PipeTransform {
   transform(functionalities: any[], searchTitle: string): any[] {
     if (!searchTitle || searchTitle.trim() === '') {
-      return functionalities; // Jeśli brak wyszukiwanego tytułu, zwróć niezmienioną tablicę
+      return functionalities; 
     }
 
     const searchTerm = searchTitle.toLowerCase();

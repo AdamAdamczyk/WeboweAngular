@@ -8,13 +8,14 @@ import { FilterTasksPipe } from './pipes/filter-tasks.pipe';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Dodaj import HttpClientModule
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { MatDialogModule } from '@angular/material/dialog';
 import { TaskUpdateDialogComponent } from './task-update-dialog/task-update-dialog.component';
 import { FilterFunctionalityPipe } from './pipes/filter-functionality.pipe';
 import { CommonModule } from '@angular/common';
 import { FunctionalityDetailComponent } from './functionality-detail/functionality-detail.component';
 import { FunctionalityUpdateDialogComponent } from './functionality-update-dialog/functionality-update-dialog.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FunctionalityUpdateDialogComponent } from './functionality-update-dialo
     TaskDetailComponent,
     TaskUpdateDialogComponent,
     FunctionalityDetailComponent,
-    FunctionalityUpdateDialogComponent
+    FunctionalityUpdateDialogComponent,
+    LoginDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,7 @@ import { FunctionalityUpdateDialogComponent } from './functionality-update-dialo
     HttpClientModule,
     MatDialogModule,
     CommonModule,
-    BrowserAnimationsModule // Dodaj HttpClientModule do listy importów
+    BrowserAnimationsModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

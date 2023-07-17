@@ -4,14 +4,15 @@ import { TaskService } from '../task.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskUpdateDialogComponent } from '../task-update-dialog/task-update-dialog.component';
 
+
 @Component({
   selector: 'app-task-detail',
   templateUrl: './task-detail.component.html',
   styleUrls: ['./task-detail.component.scss'],
 })
 export class TaskDetailComponent implements OnInit {
-  taskId: string;
-  tasks: any[]; // Tablica zadań
+  functionalityId: string;
+  tasks: any[]; 
   newTaskTitle: string;
 
   constructor(
@@ -21,17 +22,17 @@ export class TaskDetailComponent implements OnInit {
     private dialog: MatDialog
 
   ) {
-    this.taskId = this.route.snapshot.paramMap.get('id') ?? '';
+    this.functionalityId = this.route.snapshot.paramMap.get('id') ?? '';
     this.tasks = [];
     this.newTaskTitle = '';
   }
 
   ngOnInit() {
-    this.getTasks(); // Pobierz zadania przy inicjalizacji komponentu
+    this.getTasks(); 
   }
 
-  getTasks() {
-    this.taskService.getTasks().subscribe(
+  getTasks(): void {
+    this.taskService.getTasks(this.functionalityId).subscribe(
       (tasks) => {
         this.tasks = tasks;
       },
@@ -54,6 +55,7 @@ export class TaskDetailComponent implements OnInit {
         title: this.newTaskTitle,
         status: 'TODO',
         order: this.tasks.length,
+        functionalityId: this.functionalityId
       };
 
       this.taskService.addTask(newTask).subscribe(
@@ -71,7 +73,7 @@ export class TaskDetailComponent implements OnInit {
   updateTask(task: any) {
     this.taskService.updateTask(task).subscribe(
       () => {
-        // Zadanie zostało zaktualizowane
+       
       },
       (error) => {
         console.error('Failed to update task:', error);
@@ -82,7 +84,7 @@ export class TaskDetailComponent implements OnInit {
   deleteTask(taskId: string) {
     this.taskService.deleteTask(taskId).subscribe(
       () => {
-        this.getTasks(); // Pobierz zadania ponownie, aby zaktualizować listę
+        this.getTasks(); 
       },
       (error) => {
         console.error('Failed to delete task:', error);
@@ -91,7 +93,7 @@ export class TaskDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/functionality']);
   }
 
   filterTasks(tasks: any[], status: string): any[] {
@@ -102,7 +104,7 @@ export class TaskDetailComponent implements OnInit {
     task.status = status;
     this.taskService.changeTaskStatus(task._id, status).subscribe(
       () => {
-        // Zadanie zostało zaktualizowane
+      
       },
       (error) => {
         console.error('Failed to update task:', error);

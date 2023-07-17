@@ -1,82 +1,155 @@
 .task-detail {
-  h1 {
+  padding: 20px;
+
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
     margin-bottom: 20px;
+  }
+
+  .add-task {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    button {
+      font-size: 1.2rem;
+      padding: 8px 20px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s ease;
+      background-color: #007bff;
+      color: #fff;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+    textarea {
+      flex: 1;
+      font-size: 1.2rem;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .add-button {
+      font-size: 1.2rem;
+      padding: 8px 20px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s ease;
+      background-color: #007bff;
+      color: #fff;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  .back-button {
+    font-size: 1.2rem;
+    padding: 8px 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease;
+    background-color: #007bff;
+    color: #fff;
+
+    &:hover {
+      background-color: #0056b3;
+    }
   }
 
   .task-list {
     margin-bottom: 20px;
 
-    h2 {
-      font-size: 18px;
+    .list-title {
+      font-size: 1.5rem;
+      font-weight: bold;
       margin-bottom: 10px;
     }
 
     ul {
       list-style-type: none;
       padding: 0;
-    }
 
-    li {
-      margin-bottom: 10px;
-      background-color: #f5f5f5;
-      border-radius: 4px;
-      padding: 10px;
+      li {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f8f8f8;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
 
-      &:last-child {
-        margin-bottom: 0;
+        .task-item {
+          font-size: 1.2rem;
+          font-weight: bold;
+
+          span {
+            margin-right: 10px;
+          }
+
+          .buttons {
+            display: flex;       
+            align-items: center;
+          }
+
+          .move-button,
+          .delete-button,
+          .update-button {
+            font-size: 1.2rem;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s ease;
+            margin-right: 10px;
+            margin-top: 10px;
+
+            &.move-button {
+              background-color: green;
+              color: #fff;
+
+              &:hover {
+                background-color: rgb(20, 80, 20);
+              }
+            }
+
+            &.delete-button {
+              background-color: #f44336;
+              color: #fff;
+
+              &:hover {
+                background-color: #d32f2f;
+              }
+            }
+
+            &.update-button {
+              background-color: #007bff;
+              color: #fff;
+
+              &:hover {
+                background-color: #0056b3;
+              }
+            }
+          }
+        }
       }
-
-      .task-item {
-        cursor: pointer;
-
-        &:hover {
-          background-color: #e0e0e0;
-          
-        }
-
-        button.delete {
-          background-color: #f44336;
-        }
-
-        button.update {
-          background-color: #4caf50;
-          margin: 5px;
-        }
-        button.moveTo {
-          background-color: #231aa1;
-          margin: 5px;
-        }
-        
-      }
     }
-  }
-
-  .add-task {
-    margin-bottom: 20px;
-
-    input[type="text"] {
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
-
-    button {
-      padding: 5px 10px;
-      background-color: #4caf50;
-      color: white;
-      border: 5 px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  }
-
-  button {
-    padding: 5px 10px;
-    background-color: #5daf71;
-    color: white;
-    border: 5 px;
-    border-radius: 4px;
-    cursor: pointer;
   }
 }
