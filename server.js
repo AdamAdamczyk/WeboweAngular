@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 const email = "adam@adamczyk.com";
-const password = "adam";
+const password = "WeboweAngular";
 const secret = "your_secret_key";
 
 function createUserInDb() {
