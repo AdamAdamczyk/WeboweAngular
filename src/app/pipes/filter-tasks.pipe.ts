@@ -12,7 +12,7 @@ export class FilterTasksPipe implements PipeTransform {
     } else if (status === 'DONE') {
       return tasks.filter(task => task.status === 'DONE');
     } else {
-      return tasks; // Zwróć niezmienioną tablicę, jeśli status nie jest prawidłowy
+      return tasks; 
     }
   }
 }

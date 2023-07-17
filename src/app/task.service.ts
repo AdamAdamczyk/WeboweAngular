@@ -9,7 +9,7 @@ export class TaskService {
   private apiUrl = 'http://localhost:3000/tasks';
 
   constructor(private http: HttpClient) {}
-//znaleźc jak przekazać ID funkcjonalności w miejsce any
+  
   getTasks(taskId: string): Observable<any[]> {
     const url = `${this.apiUrl}/${taskId}`;
     return this.http.get<any[]>(url);

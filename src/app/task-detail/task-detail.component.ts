@@ -28,7 +28,7 @@ export class TaskDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTasks(); // Pobierz zadania przy inicjalizacji komponentu
+    this.getTasks(); 
   }
 
   getTasks(): void {
@@ -73,7 +73,7 @@ export class TaskDetailComponent implements OnInit {
   updateTask(task: any) {
     this.taskService.updateTask(task).subscribe(
       () => {
-        // Zadanie zostało zaktualizowane
+       
       },
       (error) => {
         console.error('Failed to update task:', error);
@@ -84,7 +84,7 @@ export class TaskDetailComponent implements OnInit {
   deleteTask(taskId: string) {
     this.taskService.deleteTask(taskId).subscribe(
       () => {
-        this.getTasks(); // Pobierz zadania ponownie, aby zaktualizować listę
+        this.getTasks(); 
       },
       (error) => {
         console.error('Failed to delete task:', error);
@@ -104,7 +104,7 @@ export class TaskDetailComponent implements OnInit {
     task.status = status;
     this.taskService.changeTaskStatus(task._id, status).subscribe(
       () => {
-        // Zadanie zostało zaktualizowane
+      
       },
       (error) => {
         console.error('Failed to update task:', error);

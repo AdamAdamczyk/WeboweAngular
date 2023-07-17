@@ -35,7 +35,7 @@ import { FunctionalityUpdateDialogComponent } from './functionality-update-dialo
     HttpClientModule,
     MatDialogModule,
     CommonModule,
-    BrowserAnimationsModule // Dodaj HttpClientModule do listy importów
+    BrowserAnimationsModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

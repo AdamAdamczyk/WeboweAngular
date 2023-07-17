@@ -44,7 +44,7 @@ export class FunctionalityDetailComponent implements OnInit {
       this.functionalityService.addFunctionality(newFunctionality).subscribe(
         (functionality) => {
           this.newFunctionalityTitle = '';
-          this.getFunctionality(); // Odśwież listę funkcjonalności po dodaniu
+          this.getFunctionality(); 
         },
         (error) => {
           console.error('Failed to add functionality:', error);
@@ -64,7 +64,7 @@ export class FunctionalityDetailComponent implements OnInit {
       .subscribe(
         (result) => {
           console.log('Functionality updated:', result);
-          this.getFunctionality(); // Odśwież listę funkcjonalności po aktualizacji
+          this.getFunctionality(); 
         },
         (error) => {
           console.error('Failed to update functionality:', error);
@@ -81,7 +81,7 @@ export class FunctionalityDetailComponent implements OnInit {
       .deleteFunctionality(deleteFunctionality)
       .subscribe(
         (result) => {
-          this.getFunctionality(); // Odśwież listę funkcjonalności po aktualizacji
+          this.getFunctionality(); 
         },
         (error) => {
           console.error('Failed to update functionality:', error);

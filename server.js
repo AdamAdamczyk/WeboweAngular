@@ -96,7 +96,7 @@ app.post('/tasks', (req, res) => {
 app.get('/tasks/:functionalityId', (req, res) => {
   const functionalityId = req.params.functionalityId;
 
-  Task.find({ functionalityId: functionalityId }) // Filtruj zadania na podstawie functionalityId
+  Task.find({ functionalityId: functionalityId }) 
     .then((tasks) => {
       res.json(tasks);
     })
@@ -122,7 +122,7 @@ app.put('/tasks/:id', (req, res) => {
     });
 });
 
-// Usunięcie zadania
+
 app.delete('/tasks/:id', (req, res) => {
   const taskId = req.params.id;
 

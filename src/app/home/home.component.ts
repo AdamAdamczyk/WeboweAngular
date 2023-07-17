@@ -10,14 +10,9 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    // Inicjalizacja komponentu
   }
 
   goToFunctionalityDetail(): void {
     this.router.navigate(['/functionality']);
-  }
-
-  goToTaskDetail(id: string): void {
-    this.router.navigate(['/task', id]);
   }
 }
