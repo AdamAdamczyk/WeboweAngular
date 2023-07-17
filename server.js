@@ -93,8 +93,10 @@ app.post('/tasks', (req, res) => {
 });
 
 // Pobranie wszystkich zadań
-app.get('/tasks', (req, res) => {
-  Task.find()//wyszukanie wszystkich tasków z ID funkcjonalności
+app.get('/tasks/:functionalityId', (req, res) => {
+  const functionalityId = req.params.functionalityId;
+
+  Task.find({ functionalityId: functionalityId }) // Filtruj zadania na podstawie functionalityId
     .then((tasks) => {
       res.json(tasks);
     })

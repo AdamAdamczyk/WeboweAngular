@@ -10,8 +10,9 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 //znaleźc jak przekazać ID funkcjonalności w miejsce any
-  getTasks(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getTasks(taskId: string): Observable<any[]> {
+    const url = `${this.apiUrl}/${taskId}`;
+    return this.http.get<any[]>(url);
   }
 
   addTask(task: any): Observable<any> {

@@ -23,7 +23,6 @@ export class TaskDetailComponent implements OnInit {
 
   ) {
     this.functionalityId = this.route.snapshot.paramMap.get('id') ?? '';
-    //this.functionalityId = this.route.snapshot.paramMap.get('id');
     this.tasks = [];
     this.newTaskTitle = '';
   }
@@ -32,8 +31,8 @@ export class TaskDetailComponent implements OnInit {
     this.getTasks(); // Pobierz zadania przy inicjalizacji komponentu
   }
 
-  getTasks() {
-    this.taskService.getTasks().subscribe(
+  getTasks(): void {
+    this.taskService.getTasks(this.functionalityId).subscribe(
       (tasks) => {
         this.tasks = tasks;
       },
@@ -94,7 +93,7 @@ export class TaskDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/functionality']);
   }
 
   filterTasks(tasks: any[], status: string): any[] {
