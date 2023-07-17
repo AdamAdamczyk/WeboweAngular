@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Login</h2>
+<mat-dialog-content>
+    <input matInput placeholder="Username" [(ngModel)]="username">
+
+    <input matInput placeholder="Password" type="password" [(ngModel)]="password">
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="login()">Login</button>
+  <button mat-button (click)="closeDialog()">Cancel</button>
+</mat-dialog-actions>

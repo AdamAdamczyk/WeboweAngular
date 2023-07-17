@@ -12,7 +12,7 @@ import { TaskUpdateDialogComponent } from '../task-update-dialog/task-update-dia
 })
 export class TaskDetailComponent implements OnInit {
   functionalityId: string;
-  tasks: any[]; // Tablica zadań
+  tasks: any[]; 
   newTaskTitle: string;
 
   constructor(

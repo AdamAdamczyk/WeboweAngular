@@ -1,21 +1,17 @@
 <div class="functionality-detail">
-  <h1 class="title">Functionality</h1>
   <div class="functionality-info">
   </div>
-  <button class="back-button" (click)="goBack()">Go Back</button>
   <div class="add-functionality">
-    <textarea [(ngModel)]="newFunctionalityTitle" placeholder="Enter task title"></textarea>
-    <button (click)="addFunctionality()">Add Functionality</button>
+    <textarea [(ngModel)]="newFunctionalityTitle" placeholder="Wpisz nazwę funkcjonalności"></textarea>
+    <button (click)="addFunctionality()">Dodaj funkcjonalność</button>
   </div>
+  <h1 class="title">Funkcjonalności:</h1>
   <ul class="functionality-list">
     <li *ngFor="let functionality of functionalities">
-      <div> Funkcjonalność: {{ functionality.title }}</div>
-      <button (click)="openUpdateDialog(functionality)">Update</button>
-      <button (click)="deleteFunctionality(functionality)">Delete</button>
-      <button mat-button (click)="goToTasks(functionality)">Go to Tasks</button>
-
-
-
+      <div>{{ functionality.title }}</div>
+      <button class="update-button" (click)="openUpdateDialog(functionality)">Edytuj</button>
+      <button class="delete-button" (click)="deleteFunctionality(functionality)">Usuń</button>
+      <button class="goToTask-button" mat-button (click)="goToTasks(functionality)">Przejdź do zadań</button>
     </li>
   </ul>
 </div>
